@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:open_dir/open_dir.dart';
-import 'package:open_dir/open_dir_platform_interface.dart';
-import 'package:open_dir/open_dir_method_channel.dart';
+import 'package:open_dir_platform_interface/open_dir_platform_interface.dart';
+import 'package:open_dir_platform_interface/open_dir_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockOpenDirPlatform

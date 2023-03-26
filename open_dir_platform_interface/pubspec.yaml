@@ -1,0 +1,19 @@
+name: open_dir_platform_interface
+description: Platform interface for the open_dir plugin
+repository: https://github.com/huynguyennovem/open_dir/tree/main/open_dir_platform_interface
+issue_tracker: https://github.com/huynguyennovem/open_dir/issues
+version: 0.0.1
+
+environment:
+  sdk: '>=2.19.5 <3.0.0'
+  flutter: ">=2.5.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
