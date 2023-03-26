@@ -122,6 +122,14 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  open_dir_platform_interface:
+    dependency: transitive
+    description:
+      name: open_dir_platform_interface
+      sha256: "30cd43b79c55cca0f4308e30457d4d564c598a324665c506ce11140cb68c6adb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   path:
     dependency: transitive
     description:
