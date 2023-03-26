@@ -6,7 +6,12 @@ const MethodChannel _channel =
 
 class OpenDirMacOS extends OpenDirPlatform {
 
-	@override
+  /// Registers this class as the default instance of [OpenDirPlatform].
+  static void registerWith() {
+    OpenDirPlatform.instance = OpenDirMacOS();
+  }
+
+  @override
 	Future<bool?> openNativeDir({required String path}) async {
 		final result = await _channel.invokeMethod<bool>('openNativeDir', {'path': path});
     return result;
