@@ -1,54 +1,5 @@
 #include "flutter_window.h"
-#include <flutter/method_channel.h>
-#include <flutter/standard_method_codec.h>
-
-#include <optional>
-
 #include "flutter/generated_plugin_registrant.h"
-using namespace flutter;
-using namespace std;
-
-static bool OpenDir(string path) {
-	wstring temp = wstring(path.begin(), path.end());
-	ShellExecute(NULL, L"open", temp.c_str(), NULL, NULL, SW_NORMAL);
-	return true;
-}
-
-std::string GetPathArgument(const flutter::MethodCall<>& method_call) {
-	std::string path;
-	const auto* arguments = std::get_if<EncodableMap>(method_call.arguments());
-	if (arguments) {
-		auto url_it = arguments->find(EncodableValue("path"));
-		if (url_it != arguments->end()) {
-			path = std::get<std::string>(url_it->second);
-		}
-	}
-	return path;
-}
-
-void initMethodChannel(flutter::FlutterEngine* flutter_instance) {
-	const static std::string channel_name("com.flutter/open-dir-windows");
-	auto channel =
-		std::make_unique<flutter::MethodChannel<>>(
-			flutter_instance->messenger(), channel_name,
-			&flutter::StandardMethodCodec::GetInstance());
-	channel->SetMethodCallHandler(
-		[](const flutter::MethodCall<>& call, std::unique_ptr<flutter::MethodResult<>> result) {
-			if (call.method_name() == "openNativeDir") {
-				std::string path = GetPathArgument(call);
-				int rs = OpenDir(path);
-				if (rs) {
-					result->Success();
-				}
-				else {
-					result->Error("Error", "Can not open this path!");
-				}
-			}
-			else {
-				result->NotImplemented();
-			}
-		});
-}
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
 	: project_(project) {}
@@ -71,8 +22,6 @@ bool FlutterWindow::OnCreate() {
 		return false;
 	}
 	RegisterPlugins(flutter_controller_->engine());
-
-	// initMethodChannel(flutter_controller_->engine());
 
 	SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
