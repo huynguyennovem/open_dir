@@ -12,9 +12,9 @@ flutter:
   plugin:
     implements: open_dir
     platforms:
-      macos:
+      windows:
         dartPluginClass: OpenDirWindows
-        pluginClass: OpenDirWindowsPlugin
+        pluginClass: OpenDirWindowsPluginCApi
 
 dependencies:
   flutter:
