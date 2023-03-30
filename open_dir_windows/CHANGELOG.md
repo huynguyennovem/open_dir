@@ -9,3 +9,4 @@
 ## 0.0.1+2
 
 * Fixes app-facing package run on windows platform
+
