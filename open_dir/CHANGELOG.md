@@ -9,3 +9,7 @@
 ## 0.0.1+2
 
 * Fixes app-facing package run on windows platform
+
+## 0.0.1+3
+
+* Fixes app-facing package run on linux platform
