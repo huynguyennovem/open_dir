@@ -13,3 +13,8 @@
 ## 0.0.1+3
 
 * Fixes app-facing package run on linux platform
+
+## 0.0.1+4
+
+* Add API comments
+* Format code
