@@ -18,3 +18,7 @@
 
 * Add API comments
 * Format code
+
+## 0.0.1+5
+
+* Change Dart SDK range

@@ -6,3 +6,7 @@
 
 * Fix federated plugin
 * Add LICENSE file
+
+## 0.0.1+2
+
+* Change Dart SDK range
