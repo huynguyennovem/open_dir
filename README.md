@@ -2,6 +2,8 @@
 
 Open directory on the native desktop platform with its app (Finder on MacOS, Files on Linux, File Explorer on Windows)
 
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/blueaquilae.svg?style=social&label=Follow%20HuyNguyenTw)](https://twitter.com/HuyNguyenTw)
+
 ### Supported platforms
 
 MacOS | Linux | Windows | Android | iOS | Web |
