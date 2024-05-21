@@ -40,11 +40,16 @@ OpenDirWindowsPlugin::OpenDirWindowsPlugin() {}
 
 OpenDirWindowsPlugin::~OpenDirWindowsPlugin() {}
 
-
 static bool OpenDir(string path) {
-	wstring temp = wstring(path.begin(), path.end());
-	ShellExecute(NULL, L"open", temp.c_str(), NULL, NULL, SW_NORMAL);
-	return true;
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &path[0], (int)path.size(), NULL, 0);
+    std::wstring wpath(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0, &path[0], (int)path.size(), &wpath[0], size_needed);
+
+    HINSTANCE result = ShellExecute(NULL, L"open", wpath.c_str(), NULL, NULL, SW_SHOW);
+    if(result > reinterpret_cast<HINSTANCE>(32))
+        return true;
+    else
+        return false;
 }
 
 std::string GetPathArgument(const flutter::MethodCall<>& method_call) {
@@ -64,13 +69,8 @@ void OpenDirWindowsPlugin::HandleMethodCall(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("openNativeDir") == 0) {
     std::string path = GetPathArgument(method_call);
-    int rs = OpenDir(path);
-    if (rs) {
-      result->Success();
-    }
-    else {
-      result->Error("Error", "Can not open this path!");
-    }
+    bool rs = OpenDir(path);
+    result->Success(EncodableValue(rs));
   } else {
     result->NotImplemented();
   }

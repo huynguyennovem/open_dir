@@ -2,7 +2,7 @@ name: open_dir
 description: Plugin for opening native directory on desktop platforms by given path.
 repository: https://github.com/huynguyennovem/open_dir/tree/main/open_dir
 issue_tracker: https://github.com/huynguyennovem/open_dir/issues
-version: 0.0.1+5
+version: 0.0.1+6
 
 environment:
   sdk: '>=2.18.0 <4.0.0'

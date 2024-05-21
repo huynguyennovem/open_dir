@@ -22,3 +22,7 @@
 ## 0.0.1+5
 
 * Change Dart SDK range
+
+## 0.0.1+6
+
+* Fixed a bug where a folder could not be opened if the path contained Chinese characters on Windows platform
