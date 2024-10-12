@@ -9,30 +9,49 @@ public class OpenDirMacosPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    guard let path = (call.arguments as? NSDictionary)?["path"] as? String else {
+    guard let args = call.arguments as? NSDictionary,
+          let path = args["path"] as? String else {
         result(FlutterMethodNotImplemented)
         return
     }
+    let highlightedFileName = args["highlightedFileName"] as? String
+    
     switch call.method {
-        case "openNativeDir":
-          let rs = self.openNativeDir(path: path, result: result);
-          result(rs)
-        default:
-          result(FlutterMethodNotImplemented)
+    case "openNativeDir":
+        let rs = self.openNativeDir(path: path, highlightedFileName: highlightedFileName, result: result)
+        result(rs)
+    default:
+        result(FlutterMethodNotImplemented)
     }
   }
 
-  func openNativeDir(path: String, result: FlutterResult) -> Bool {
-    if(!isPathExist(path: path)) {
+  func openNativeDir(path: String, highlightedFileName: String?, result: FlutterResult) -> Bool {
+    if (!isPathExist(path: path)) {
         return false
     }
+    
     let url = URL(fileURLWithPath: path, isDirectory: true)
-    NSWorkspace.shared.activateFileViewerSelecting([url])
+    
+    if let highlightedFileName = highlightedFileName {
+        let fileURL = url.appendingPathComponent(highlightedFileName)
+        if isPathExist(path: fileURL.path, isDirectory: false) {
+            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+        } else {
+            NSWorkspace.shared.activateFileViewerSelecting([url])
+        }
+    } else {
+        NSWorkspace.shared.activateFileViewerSelecting([url])
+    }
+    
     return true
   }
 
-  func isPathExist(path: String) -> Bool {
-    var isDir : ObjCBool = true
-    return FileManager.default.fileExists(atPath: path, isDirectory: &isDir)
+  func isPathExist(path: String, isDirectory: Bool? = nil) -> Bool {
+    var isDir: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDir)
+    if let isDirectory = isDirectory {
+      return exists && isDirectory == isDir.boolValue
+    }
+    return exists
   }
 }
