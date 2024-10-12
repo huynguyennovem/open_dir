@@ -12,4 +12,4 @@
 
 ## 0.0.2
 
-* Support to open file with highlighted file
+* Support to open dir with highlighted file
