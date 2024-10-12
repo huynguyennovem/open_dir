@@ -24,14 +24,27 @@ struct _OpenDirLinuxPlugin
 G_DEFINE_TYPE(OpenDirLinuxPlugin, open_dir_linux_plugin, g_object_get_type())
 
 // open_dir implementation methods
-static bool open_directory(const gchar *path)
+static bool open_directory(const gchar *path, const gchar *highlighted_file)
 {
   // to prevent showing man of xdg-open command
   if (std::string(path) == "")
   {
     return false;
   }
-  std::string command = "xdg-open \"" + std::string(path) + "\"";
+  
+  std::string command;
+  if (highlighted_file && strlen(highlighted_file) > 0) {
+    // Use dbus-send to open the directory and highlight the file
+    command = "dbus-send --session --dest=org.freedesktop.FileManager1 "
+              "--type=method_call /org/freedesktop/FileManager1 "
+              "org.freedesktop.FileManager1.ShowItems "
+              "array:string:\"file://" + std::string(path) + "/" + std::string(highlighted_file) + "\" "
+              "string:\"\"";
+  } else {
+    // Use xdg-open if no file is highlighted
+    command = "xdg-open \"" + std::string(path) + "\"";
+  }
+  
   int result = std::system(command.c_str());
   if (result == -1)
   {
@@ -44,21 +57,32 @@ static bool open_directory(const gchar *path)
   return true;
 }
 
-static gchar *open_dir_get_path_arg(FlMethodCall *method_call, GError **error)
+static void open_dir_get_args(FlMethodCall *method_call, gchar **path, gchar **highlighted_file, GError **error)
 {
   FlValue *args = fl_method_call_get_args(method_call);
   if (fl_value_get_type(args) != FL_VALUE_TYPE_MAP)
   {
     g_set_error(error, 0, 0, "Argument is not correct");
-    return nullptr;
+    return;
   }
+  
   FlValue *path_value = fl_value_lookup_string(args, "path");
   if (path_value == nullptr)
   {
     g_set_error(error, 0, 0, "Path value is missing");
-    return nullptr;
+    return;
   }
-  return g_strdup(fl_value_get_string(path_value));
+  *path = g_strdup(fl_value_get_string(path_value));
+  
+  FlValue *highlighted_file_value = fl_value_lookup_string(args, "highlightedFileName");
+  if (highlighted_file_value != nullptr)
+  {
+    *highlighted_file = g_strdup(fl_value_get_string(highlighted_file_value));
+  }
+  else
+  {
+    *highlighted_file = nullptr;
+  }
 }
 
 // Called when a method call is received from Flutter.
@@ -73,14 +97,16 @@ static void open_dir_linux_plugin_handle_method_call(
   if (strcmp(method, "openNativeDir") == 0)
   {
     g_autoptr(GError) error = nullptr;
-    g_autofree gchar *path = open_dir_get_path_arg(method_call, &error);
+    g_autofree gchar *path = nullptr;
+    g_autofree gchar *highlighted_file = nullptr;
+    open_dir_get_args(method_call, &path, &highlighted_file, &error);
     if (path == nullptr || (path != nullptr && strlen(path) == 0))
     {
       response = FL_METHOD_RESPONSE(fl_method_error_response_new("Native error", "Path is null or empty!", nullptr));
     }
     else
     {
-      int rs = open_directory(path);
+      int rs = open_directory(path, highlighted_file);
       if (rs)
       {
         response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_bool(rs)));

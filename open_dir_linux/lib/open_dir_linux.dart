@@ -10,10 +10,15 @@ class OpenDirLinux extends OpenDirPlatform {
   }
 
   @override
-  Future<bool?> openNativeDir({required String path}) async {
+  Future<bool?> openNativeDir({
+    required String path,
+    String? highlightedFileName,
+  }) async {
     try {
-      final result =
-          await _channel.invokeMethod<bool>('openNativeDir', {'path': path});
+      final result = await _channel.invokeMethod<bool>('openNativeDir', {
+        'path': path,
+        'highlightedFileName': highlightedFileName,
+      });
       return result;
     } on Exception catch (_) {
       return false;
