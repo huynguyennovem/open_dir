@@ -10,8 +10,11 @@ class MethodChannelOpenDir extends OpenDirPlatform {
   final methodChannel = const MethodChannel('com.flutter/open-dir');
 
   @override
-  Future<bool?> openNativeDir({required String path}) async {
-    final result = await methodChannel.invokeMethod<bool>('openNativeDir', {'path': path});
+  Future<bool?> openNativeDir({required String path, String? highlightedFileName}) async {
+    final result = await methodChannel.invokeMethod<bool>('openNativeDir', {
+      'path': path,
+      'highlightedFileName': highlightedFileName,
+    });
     return result;
   }
 }

@@ -23,7 +23,7 @@ abstract class OpenDirPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<bool?> openNativeDir({required String path}) {
+  Future<bool?> openNativeDir({required String path, String? highlightedFileName}) {
     throw UnimplementedError('openNativeDir() has not been implemented.');
   }
 }

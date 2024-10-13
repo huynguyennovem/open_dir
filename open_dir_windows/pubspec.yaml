@@ -19,9 +19,11 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  open_dir_platform_interface: ^0.0.1
+  open_dir_platform_interface: ^0.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+#  open_dir_platform_interface:
+#    path: ../open_dir_platform_interface
