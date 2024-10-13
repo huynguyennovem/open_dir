@@ -2,7 +2,7 @@ name: open_dir
 description: Plugin for opening native directory on desktop platforms by given path.
 repository: https://github.com/huynguyennovem/open_dir/tree/main/open_dir
 issue_tracker: https://github.com/huynguyennovem/open_dir/issues
-version: 0.0.1+6
+version: 0.0.2
 
 environment:
   sdk: '>=2.18.0 <4.0.0'
@@ -21,10 +21,11 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  open_dir_platform_interface: ^0.0.1
-  open_dir_macos: ^0.0.1
-  open_dir_windows: ^0.0.1
-  open_dir_linux: ^0.0.1
+
+  open_dir_platform_interface: ^0.0.2
+  open_dir_macos: ^0.0.2
+  open_dir_windows: ^0.0.2
+  open_dir_linux: ^0.0.2
 
 dev_dependencies:
   flutter_test:

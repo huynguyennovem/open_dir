@@ -11,7 +11,7 @@ class MockOpenDirPlatform
     implements OpenDirPlatform {
 
   @override
-  Future<bool?> openNativeDir({required String path}) {
+  Future<bool?> openNativeDir({required String path, String? highlightedFileName}) {
     final dir = Directory(path);
     return dir.existsSync() ? Future.value(true) : Future.value(false);
   }

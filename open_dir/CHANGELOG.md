@@ -26,3 +26,7 @@
 ## 0.0.1+6
 
 * Fixed a bug where a folder could not be opened if the path contained Chinese characters on Windows platform
+
+## 0.0.2
+
+* Support to open dir with highlighted file

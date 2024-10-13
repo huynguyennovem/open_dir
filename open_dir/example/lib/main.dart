@@ -16,12 +16,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _openDirPlugin = OpenDir();
 
-  final _tfController = TextEditingController();
+  final _tfDirPathController = TextEditingController();
+  final _tfHighlightedFilenameController = TextEditingController();
   final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void dispose() {
-    _tfController.dispose();
+    _tfDirPathController.dispose();
+    _tfHighlightedFilenameController.dispose();
     super.dispose();
   }
 
@@ -34,39 +36,58 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Open dir example'),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _tfController,
-                decoration: const InputDecoration(
-                  hintText: 'Paste the native directory path here',
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: _tfDirPathController,
+                  decoration: InputDecoration(
+                    hintText: 'Directory path here',
+                    hintStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16.0),
-              MaterialButton(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                onPressed: () => _openNativeDirectory(_tfController.text),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Open dir', style: TextStyle(color: Colors.white)),
+                TextField(
+                  controller: _tfHighlightedFilenameController,
+                  decoration: InputDecoration(
+                    hintText: 'Selecting file name here',
+                    hintStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () => _openNativeDirectory(
+                    path: _tfDirPathController.text,
+                    highlightedFileName: _tfHighlightedFilenameController.text,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Open dir'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  _openNativeDirectory(String path) async {
+  _openNativeDirectory({required String path, String? highlightedFileName}) async {
     try {
-      final rs = await _openDirPlugin.openNativeDir(path: path);
+      final rs = await _openDirPlugin.openNativeDir(
+        path: path,
+        highlightedFileName: highlightedFileName,
+      );
       if (null == rs) {
-        throw PlatformException(
-            code: '404', message: 'Platform error while opening directory: $path');
+        throw PlatformException(code: '404', message: 'Platform error while opening directory: $path');
       }
       if (rs) {
+        if (highlightedFileName != null && highlightedFileName.isNotEmpty) {
+          debugPrint('Opened file: $path with selecting file name: $highlightedFileName');
+          return;
+        }
         debugPrint('Opened directory: $path');
       } else {
         debugPrint('Can not open directory: $path');
