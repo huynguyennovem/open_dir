@@ -1,32 +1,36 @@
-## 0.0.1
+## 0.0.2+1
 
-* Initial plugin & implement macos platform
+* Update README and correct CHANGELOG order
 
-## 0.0.1+1
+## 0.0.2
 
-* Fixes app-facing package run on mac platform
+* Support to open dir with highlighted file
 
-## 0.0.1+2
+## 0.0.1+6
 
-* Fixes app-facing package run on windows platform
+* Fixed a bug where a folder could not be opened if the path contained Chinese characters on Windows platform
 
-## 0.0.1+3
+## 0.0.1+5
 
-* Fixes app-facing package run on linux platform
+* Change Dart SDK range
 
 ## 0.0.1+4
 
 * Add API comments
 * Format code
 
-## 0.0.1+5
+## 0.0.1+3
 
-* Change Dart SDK range
+* Fixes app-facing package run on linux platform
 
-## 0.0.1+6
+## 0.0.1+2
 
-* Fixed a bug where a folder could not be opened if the path contained Chinese characters on Windows platform
+* Fixes app-facing package run on windows platform
 
-## 0.0.2
+## 0.0.1+1
 
-* Support to open dir with highlighted file
+* Fixes app-facing package run on mac platform
+
+## 0.0.1
+
+* Initial plugin & implement macos platform
