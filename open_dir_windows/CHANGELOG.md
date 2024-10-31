@@ -1,20 +1,24 @@
-## 0.0.1
+## 0.0.2+1
 
-* Initial Windows plugin
+* Fix crash when passing null to highlightedFileName
+
+## 0.0.2
+
+* Support to open dir with highlighted file
+
+## 0.0.1+3
+
+* Fixed a bug where a folder could not be opened if the path contained Chinese characters
+
+## 0.0.1+2
+
+* Change Dart SDK range
 
 ## 0.0.1+1
 
 * Fix plugin config
 * Fixes app-facing package run on windows platform
 
-## 0.0.1+2
+## 0.0.1
 
-* Change Dart SDK range
-
-## 0.0.1+3
-
-* Fixed a bug where a folder could not be opened if the path contained Chinese characters
-
-## 0.0.2
-
-* Support to open dir with highlighted file
+* Initial Windows plugin
