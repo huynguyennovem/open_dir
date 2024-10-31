@@ -75,7 +75,7 @@ static void open_dir_get_args(FlMethodCall *method_call, gchar **path, gchar **h
   *path = g_strdup(fl_value_get_string(path_value));
   
   FlValue *highlighted_file_value = fl_value_lookup_string(args, "highlightedFileName");
-  if (highlighted_file_value != nullptr)
+  if (highlighted_file_value != nullptr && fl_value_get_type(highlighted_file_value) == FL_VALUE_TYPE_STRING)
   {
     *highlighted_file = g_strdup(fl_value_get_string(highlighted_file_value));
   }

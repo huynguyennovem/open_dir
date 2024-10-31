@@ -1,15 +1,19 @@
-## 0.0.1
+## 0.0.2+1
 
-* Initial Linux plugin
+* Fix assertion error when passing null to highlightedFileName
 
-## 0.0.1+1
+## 0.0.2
 
-* Fixes app-facing package run on linux platform
+* Support to open dir with highlighted file
 
 ## 0.0.1+2
 
 * Change Dart SDK range
 
-## 0.0.2
+## 0.0.1+1
 
-* Support to open dir with highlighted file
+* Fixes app-facing package run on linux platform
+
+## 0.0.1
+
+* Initial Linux plugin
