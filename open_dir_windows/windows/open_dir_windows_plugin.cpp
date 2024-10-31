@@ -50,7 +50,7 @@ static std::wstring Utf8ToWide(const std::string& str) {
     return wstrTo;
 }
 
-static bool OpenDir(const std::string& path, const std::string& highlightedFileName = "") {
+static bool OpenDir(const std::string& path, const std::string highlightedFileName = "") {
     std::wstring wpath = Utf8ToWide(path);
     
     HINSTANCE result;
@@ -69,8 +69,13 @@ std::string GetStringArgument(const flutter::MethodCall<>& method_call, const st
     const auto* arguments = std::get_if<EncodableMap>(method_call.arguments());
     if (arguments) {
         auto it = arguments->find(EncodableValue(key));
-        if (it != arguments->end()) {
-            value = std::get<std::string>(it->second);
+        if (it != arguments->end() && !it->second.IsNull()) {
+            try {
+                value = std::get<std::string>(it->second);
+            } catch (const std::bad_variant_access&) {
+                // Handle conversion error gracefully
+                value = "";
+            }
         }
     }
     return value;
