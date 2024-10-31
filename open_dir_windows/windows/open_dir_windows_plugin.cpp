@@ -73,7 +73,6 @@ std::string GetStringArgument(const flutter::MethodCall<>& method_call, const st
             try {
                 value = std::get<std::string>(it->second);
             } catch (const std::bad_variant_access&) {
-                // Handle conversion error gracefully
                 value = "";
             }
         }
